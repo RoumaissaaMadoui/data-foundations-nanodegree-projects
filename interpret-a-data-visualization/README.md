@@ -1,0 +1,4 @@
+# Interpret a Data Visualization
+This project is aimed at analysis using data visualization in Tableau.
+## Project Instructions
+Find three insights in the [visualization](https://public.tableau.com/views/MakeoverMonday34Malaria_0/MalariainAfrica?:embed=y&:showVizHome=no&:display_count=y&:display_static_image=y&:bootstrapWhenNotified=true). For each insight, provide a static image that shares what you found. Write a short report explaining each observation and how you found the information to reach your conclusion from the dashboard. Altogether (including images), your report should be 1-2 pages.
