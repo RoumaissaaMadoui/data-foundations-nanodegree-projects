@@ -1,0 +1,55 @@
+/* Query 1 - query used for first insight */
+WITH t AS
+  (SELECT C.CustomerId,
+          SUM(IL.UnitPrice * IL.Quantity)AS Purchases,
+          C.SupportRepId,
+          C.LastName|| ' ' || C.FirstName AS CustomerName
+   FROM Customer C
+   JOIN Invoice I ON C.CustomerId = I.CustomerId
+   JOIN InvoiceLine IL ON I.InvoiceId = IL.InvoiceId
+   GROUP BY C.CustomerId
+   ORDER BY SUM(IL.UnitPrice * Quantity) DESC
+   LIMIT 15)
+SELECT E.EmployeeId,
+       E.LastName|| ' ' || E.FirstName AS EmployeeName,
+       E.Title,
+       Date(E.HireDate) AS HireDate,
+       T.CustomerName,
+       T.Purchases
+FROM Employee E
+JOIN t T ON E.EmployeeId = T.SupportRepId;
+
+/* Query 2 - query used for second insight */
+SELECT G.Name,
+       COUNT(IL.Quantity*IL.UnitPrice) AS Purchases,   
+       T.GenreId
+FROM InvoiceLine IL
+JOIN Track T ON IL.TrackId = T.TrackId
+JOIN Genre G ON T.GenreId = G.GenreId
+GROUP BY 1,
+         3
+ORDER BY 2 DESC;
+
+/* Query 3 - query used for third insight */
+SELECT M.Name,
+       COUNT(I.InvoiceId) AS Invoices
+FROM MediaType M
+JOIN Track T ON M.MediaTypeID = T.MediaTypeID
+JOIN InvoiceLine IL ON T.TrackId = IL.TrackId
+JOIN Invoice I ON IL.InvoiceId = I.InvoiceId
+GROUP BY M.Name
+ORDER BY Invoices DESC;
+
+/* Query 4 - query used for fourth insight */
+SELECT Al.ArtistId,
+       A.Name,
+       COUNT(T.TrackId) AS TrackCount
+FROM Artist A
+JOIN Album Al ON A.ArtistId = Al.ArtistId
+JOIN Track T ON Al.AlbumId = T.AlbumId
+JOIN Genre G ON T.GenreId = G.GenreId
+WHERE G.Name = 'Rock'
+GROUP BY 1,
+         2
+ORDER BY 3 DESC
+LIMIT 10;
